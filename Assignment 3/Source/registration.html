@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script>
+        function registration()
+        {
+            if(document.getElementById('name').value.length>0 && document.getElementById('id').value.length>0 &&
+                document.getElementById('email').value.length>0 && document.getElementById('gen').value.length>0 &&
+                document.getElementById('dob').value.length>0 && document.getElementById('cont').value.length>0 &&
+                document.getElementById('coun').value.length>0 && document.getElementById('add').value.length>0 &&
+                document.getElementById('pswrd').value.length>0 && document.getElementById('cpswrd').value.length>0 &&
+                ( document.getElementById('cpswrd').value ==document.getElementById('pswrd').value))
+            {
+                localStorage.setItem('Login Id',(document.getElementById('id').value));
+                localStorage.setItem('Password',(document.getElementById('pswrd').value));
+                window.location.href="index.html";
+            }
+            else
+            {
+                alert('Dear user, you have missed entering few details !');
+            }
+        }
+    </script>
+
+
+</head>
+<body>
+<center>
+    <h1><i>Registration Page</i></h1>
+    <h4 style="text-align: right; font-weight: bold; color: black"><a href="index.html">LOGIN PAGE</a></h4>
+    <div class="reg">
+        <table style="width: 20px;">
+            <tr>
+                <td>User Name</td>
+                <td><input id="name" style="width:125%; background-color: transparent; padding-bottom: 10px" type="text" name="fullname" required=""></td>
+            </tr><br><br>
+
+            <tr>
+                <td>Login Id </td>
+                <td><input  id="id" style="width: 125%; background-color: transparent; padding-bottom: 10px" type="text" name="loginid" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>Password </td>
+                <td><input id="pswrd" style="width: 125%; background-color: transparent; padding-bottom: 10px" type="password" name="pswrd" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>ConfirmPassword</td>
+                <td><input id="cpswrd" style="width: 125%; background-color: transparent; padding-bottom: 10px" type="password" name="cpswrd" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>Date of Birth </td>
+                <td><input id="dob" style="width: 125%; background-color: transparent; padding-bottom: 10px" type="date" name="dob" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>Gender </td>
+                <td style="width:150%; background-color: transparent; padding-bottom: 5px">
+                    <input type="radio" name="gender" value="f" required="">Female<br>
+                    <input type="radio" name="gender" value="m" required="">Male
+                </td>
+            </tr>
+
+            <tr>
+                <td>Email Id </td>
+                <td><input id="email" style="width: 125%; background-color: transparent; padding-bottom: 10px" type="email" name="email" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>Contact Number </td>
+                <td><input id="cont" type="text" style="width: 125%; background-color: transparent; padding-bottom: 10px" name="num" maxlength="10" required=""></td>
+            </tr><br>
+
+            <tr>
+                <td>Country </td>
+                <td><select id="coun" name="country" required="" style="width: 125%; background-color: transparent; padding-bottom: 10px">
+                    <option selected disabled>Select </option>
+                    <option>Austria</option>
+                    <option>Algeria</option>
+                    <option>Australia</option>
+                    <option>Bangladesh</option>
+                    <option>Belgium</option>
+                    <option>Bhutan</option>
+                    <option>Brazil</option>
+                    <option>Bulgaria</option>
+                    <option>Canada</option>
+                    <option>Chile</option>
+                    <option>Columbia</option>
+                    <option>CostaRica</option>
+                    <option>Cuba</option>
+                    <option>Denmark</option>
+                    <option>Dominican Republic</option>
+                    <option>Egypt</option>
+                    <option>Ethiopia</option>
+                    <option>Fiji</option>
+                    <option>Finland</option>
+                    <option>France</option>
+                    <option>Georgia</option>
+                    <option>Germany</option>
+                    <option>Ghana</option>
+                    <option>Greece</option>
+                    <option>Hong Kong</option>
+                    <option>Hungary</option>
+                    <option>India</option>
+                    <option>Indonesia</option>
+                    <option>Iran</option>
+                    <option>Iraq</option>
+                    <option>Ireland</option>
+                    <option>Israel</option>
+                    <option>Italy</option>
+                    <option>Japan</option>
+                    <option>Kenya</option>
+                    <option>Korea</option>
+                    <option>Kuwait</option>
+                    <option>Libya</option>
+                    <option>Macao</option>
+                    <option>Malaysia</option>
+                    <option>Maldives</option>
+                    <option>Mexico</option>
+                    <option>Morocco</option>
+                    <option>Nepal</option>
+                    <option>Netherlands</option>
+                    <option>Nigeria</option>
+                    <option>Norway</option>
+                    <option>Oman</option>
+                    <option>Pakistan</option>
+                    <option>Poland</option>
+                    <option>Portugal</option>
+                    <option>Qatar</option>
+                    <option>Russia</option>
+                    <option>Saudi Arabia</option>
+                    <option>South Africa</option>
+                    <option>Sri Lanka</option>
+                    <option>Spain</option>
+                    <option>Switzerland</option>
+                    <option>Taiwan</option>
+                    <option>Thailand</option>
+                    <option>Turkey</option>
+                    <option>Uganda</option>
+                    <option>United Arab Emirates</option>
+                    <option>United Kingdom</option>
+                    <option>United States of America</option>
+                    <option>Vietnam</option>
+                    <option>Yemen</option>
+                    <option>Zimbabwe</option>
+                </select>
+                </td>
+            </tr>
+
+            <tr>
+                <div id="xyz">
+                    <td>Address </td>
+                    <td><textarea id="add" name="addr" rows="3" cols="20" style="width:125%; background-color: transparent; padding-bottom: 10px" required="">
+            </textarea></td>
+
+                </div>
+
+            </tr><br>
+
+        </table>
+        <br>
+
+        <input style="font-family: SansSerif; font-size: 150%; font-weight: bold; padding: 10px 20px; text-align: center; background-color: black;
+        color: whitesmoke; border: none"
+               type="submit" name="Register" value="Register" onclick="registration()">
+    </div>
+
+</center>
+</body>
+</html>

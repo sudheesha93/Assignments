@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Index page</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script>
+        function validate() {
+            if(document.getElementById('name').value.length!=0 && document.getElementById('password').value.length!=0)
+            {
+                if (document.getElementById('name').value == localStorage.getItem('Login Id') &&
+                    document.getElementById('password').value == localStorage.getItem('Password'))
+                {
+                    window.location.href='login.html';
+                }
+                else
+                {
+                    alert('Please enter valid credentials');
+                }
+            }
+            else
+            {
+                alert('Dear user login details must be entered');
+            }
+
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+<script src="//connect.facebook.net/en_US/all.js"></script>
+        <form class="contact_form" name="contact_form">
+
+            <h1>Login Into Your Account</h1>
+
+            <table align="center">
+                <tr>
+                    <td>UserName</td>
+                    <td><input type="email" class="name" id="name" placeholder="Enter your email address" required=""></td>
+                </tr><br>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" class="password" id="password" placeholder="Enter your password" required="" ></td>
+                </tr><br>
+            </table>
+            <br>
+
+
+        <div class="button">
+            <input type="submit" style="font-family: SansSerif; font-size: 150%; font-weight: bold; padding: 10px 20px; text-align: center"
+                   name="Sign In" value="Login" onclick="validate()"><br><br>
+        </div>
+
+
+            <div class="forgot">
+                <a href="#">Forgot password ?</a>
+            </div>
+        </form>
+
+        <div class="account">
+            <h2><a href="registration.html">Don't have an account? Sign Up Here!</a></h2>
+            <br>
+            <br>
+            <div class="fb-login-button" data-size="xlarge" data-auto-logout-link="False">
+
+            </div>
+        </div>
+
+<script>
+
+    (function(d, s, id)
+    {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1385412604849519";
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+        (document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+
+        if (response.status === 'connected')
+        {
+            testAPI();
+        }
+        else if(response.status === 'not_authorized')
+        {
+            document.getElementById('status').innerHTML = 'Please log into this app.';
+        } else {
+            document.getElementById('status').innerHTML = 'Please log into Facebook.';
+        }
+    }
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    window.fbAsyncInit = function()
+    {
+        FB.init({
+            appId      : '{1385412604849519}',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v2.8'
+        }
+        );
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+        });
+    }
+</script>
+
+</body>
+</html>

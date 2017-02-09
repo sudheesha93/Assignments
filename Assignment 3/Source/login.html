@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>TEXT-TO-SPEECH</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+
+<body ng-app="Sentiments_Analysis">
+<h1>TEXT-TO-SPEECH-CONVERTER</h1>
+<div class="mash">
+<p>The text you entered will be convereted into speech. </p>
+<p>Try it below..!</p>
+
+<form>
+    <input type="text" class="txt">
+    <div>
+        <label for="rate">Rate::</label><input type="range" min="0.5" max="2" value="1" step="0.1" id="rate">
+        <div class="rate-value">1</div>
+
+    </div>
+    <div>
+        <label for="pitch">Pitch::</label><input type="range" min="0" max="2" value="1" step="0.1" id="pitch">
+        <div class="pitch-value">1</div>
+
+    </div>
+    <select>
+
+    </select>
+</form>
+</div>
+<div ng-controller="SentimentControl">
+    <h1> Sentiment Analysis Alchemy API </h1>
+
+        <button style="font-family: SansSerif; font-size: 120%; font-weight: bold; padding: 10px 20px;
+    text-align: center; border: none" class="btn" data-ng-click="SentimentListDisplay()">
+            <b>Click here for Sentiment Analysis</b>
+        </button>
+
+
+    <div id="Sentiment_List" style="display:none;">
+        <p ng-model="Sentimentlang">
+        <table align="center" style="border:solid; width:25%;">
+            <tr>
+                <td>Sentiment</td>
+                <td>{{Sentimentlang.sentiment}}</td>
+            </tr>
+
+            <tr>
+                <td>Score</td>
+                <td>{{Sentimentlang.score}}</td>
+            </tr>
+        </table>
+        </p>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+
+    var app=angular.module("Sentiments_Analysis",[]);
+    app.controller("SentimentControl",function ($scope,$http) {
+        $scope.SentimentListDisplay = function () {
+            var text1=$scope.SentimentListDisplay;
+            var words = $http.get("http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment?" +
+                "apikey=eb0208131cd01321b51b65fe25ff550e4e7a49b6&outputMode=json&text=" +inputTxt.value)
+            words.success(function (data) {
+                console.log(data);
+                $scope.Sentimentlang={"sentiment":data.docSentiment.type,"score":data.docSentiment.score
+                    ,"language":data.language};
+                document.getElementById('Sentiment_List').style.display = 'block';
+            });
+        }
+
+    });
+
+    var synth = window.speechSynthesis;
+
+    var inputForm = document.querySelector('form');
+    var inputTxt = document.querySelector('.txt');
+    var voiceSelect = document.querySelector('select');
+
+    var pitch = document.querySelector('#pitch');
+    var pitchValue = document.querySelector('.pitch-value');
+    var rate = document.querySelector('#rate');
+    var rateValue = document.querySelector('.rate-value');
+
+    var voices = [];
+
+    function populateVoiceList() {
+        voices = synth.getVoices();
+
+        for(i = 0; i < voices.length ; i++) {
+            var option = document.createElement('option');
+            option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+            if(voices[i].default) {
+                option.textContent += ' -- DEFAULT';
+            }
+
+            option.setAttribute('data-lang', voices[i].lang);
+            option.setAttribute('data-name', voices[i].name);
+            voiceSelect.appendChild(option);
+        }
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined)
+    {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+
+    inputForm.onsubmit = function(event) {
+        event.preventDefault();
+
+        var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+        var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+        for(i = 0; i < voices.length ; i++) {
+            if(voices[i].name === selectedOption) {
+                utterThis.voice = voices[i];
+            }
+        }
+        utterThis.pitch = pitch.value;
+        utterThis.rate = rate.value;
+        synth.speak(utterThis);
+
+        utterThis.onpause = function(event) {
+            var char = event.utterance.text.charAt(event.charIndex);
+            console.log('Speech paused at character ' + event.charIndex + ' of "' +
+                event.utterance.text + '", which is "' + char + '".');
+        }
+
+        inputTxt.blur();
+    }
+
+    pitch.onchange = function() {
+        pitchValue.textContent = pitch.value;
+    }
+
+    rate.onchange = function() {
+        rateValue.textContent = rate.value;
+    }
+
+</script>
