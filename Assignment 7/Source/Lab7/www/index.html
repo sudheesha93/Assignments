@@ -1,0 +1,29 @@
+<ion-view view-title="Login Form">
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+      </ion-header-bar>
+      <ion-content padding="true" style="align:center; background-image: url(http://i.imgur.com/ZLcDw.jpg)">
+         <div class="row row-center" >
+        <div class="col text-center" >
+            <img src="http://jkcpis.nic.in/image/Login.jpg">
+        </div>
+      </div>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input ng-model="username" type="text" placeholder="Enter Username" />
+                </label>
+                <label class="item item-input">
+                    <input ng-model="password" type="password" placeholder="Enter your Password" />
+                </label>
+            </div>
+            <div class="padding-left padding-right">
+              <button class="button button-block button-positive padding-horizontal" ng_click="login(username,password)" type="submit">Login</button>
+                 <button class="button button-positive button-block" ng-click="LoginwithFacebook()" id="facebook">Login with Facebook</button>
+ 
+        <a href="#register" class="positive">Register</a>
+            </div>
+       
+    </ion-content>
+
+    </ion-pane>
+  
