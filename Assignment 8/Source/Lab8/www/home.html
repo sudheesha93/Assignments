@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <script>
+        (function() {
+            var cx = '014533240989500353965:6nvf0b7rp8s';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = false;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+       
+    </script>
+    <script type="text/javascript"
+        src="http://www.google.com/cse/brand?form=cse-search-box-form-id&inputbox=cse-search-input-box-id">
+</script>
+    <script src="js/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
+<script src="js/angular.min.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/angularfire.min.js"></script>
+
+    <script src="js/app.js"></script>
+<!-- End of Google branding watermark -->
+
+<!-- Element code snippet -->
+<script type="text/javascript">
+    function executeQuery() {
+        var input = document.getElementById('cse-search-input-box-id');
+        var element = google.search.cse.element.getElement('searchInput');
+        console.log(element.getInputQuery());
+        if (input.value == '') {
+            element.clearAllResults();
+        } else {
+            element.execute(input.value);
+            var service_url = 'https://kgsearch.googleapis.com/v1/entities:search';
+            var params = {
+                'query': input.value,
+                'limit': 1,
+                'indent': true,
+                'key' : 'AIzaSyBXIgU_8ov_uiEpjBscNOr5axYwoyjr3yY',
+            };
+            $.getJSON(service_url + '?callback=?', params, function(response) {
+                $.each(response.itemListElement, function(i, element) {
+                    var kt = document.getElementById('knowledgeText');
+                    kt.innerText = element['result']['detailedDescription']['articleBody'];
+                });
+            });
+        }
+        return false;
+    }
+    setTimeout(executeQuery,3000);
+</script>
+    </head>
+    
+
+    <body ng-app="starter" style="background-image: url(http://cdn8.staztic.com/app/a/2628/2628743/backgrounds-wallpaper-2-7-s-307x512.jpg); background-repeat:no-repeat;background-size: cover;">
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title"><center>MASHUP PAGE</center></h1>
+      </ion-header-bar>
+    
+          <ion-view view-title="mashup" name="login-view" style="background: url(http://cdn8.staztic.com/app/a/2628/2628743/backgrounds-wallpaper-2-7-s-307x512.jpg); background-size: cover ">
+      
+  <ion-content class="padding">   
+<div class="container">
+<h1>Image Search</h1>
+<form class="form-inline" onsubmit="return executeQuery();" id="cse-search-box-form-id">
+    <!-- This is the input searc box -->
+    <input type="text" id="cse-search-input-box-id" size="25" autocomplete="off"/>
+    <!-- This is the search button -->
+    <input type="submit" class="btn btn-primary" value="Search"/>
+</form>
+<gcse:searchresults-only gname="searchInput" disableWebSearch="true"></gcse:searchresults-only>
+<div id="knowledgeText"></div>
+
+</div>
+</ion-content> 
+</ion-view>
+</ion-pane>
+   
+</body>
+</html>
